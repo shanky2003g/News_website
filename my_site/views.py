@@ -57,5 +57,9 @@ def register(request):
 
 def home(request):
      return render (request,'index.html')
+ 
+def logouts(request):
+    logout(request)
+    return redirect('l')
 
 
