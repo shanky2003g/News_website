@@ -5,6 +5,8 @@ from django.contrib.auth import authenticate,login,logout
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from django.http import QueryDict
+from newsapi import NewsApiClient 
+from itertools import islice
 def logins(request):
     username = request.GET.get('u', '') 
     if request.method == "POST":
@@ -56,10 +58,30 @@ def register(request):
     return render(request,'register.html')
 
 def home(request):
-     return render (request,'index.html')
- 
+    newsapi = NewsApiClient(api_key ='e7bdc0e810624819986b94b0b02d0f1c') 
+    top = newsapi.get_top_headlines(country ='in')  
+  
+    l = top['articles']
+    desc =[] 
+    news =[] 
+    img =[] 
+    urls = []
+    for i in range(len(l)): 
+        f = l[i] 
+        news.append(f['title']) 
+        desc.append(f['description']) 
+        img.append(f['urlToImage']) 
+        urls.append(f['url'])
+    mylist = zip(news, desc, img,urls)
+    # mylist = list(islice(zip(news, desc, img, urls), 100))  
+    # mylist = [(f['title'], f['description'], f['urlToImage'], f['url']) for f in l[:100]]
+    # print(len(mylist))
+    # print(top)
+    return render (request,'index.html',context ={"mylist":mylist})
+
 def logouts(request):
     logout(request)
     return redirect('l')
 
-
+def feedback(request):
+    return render(request,'form.html')

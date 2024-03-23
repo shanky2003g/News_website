@@ -1,0 +1,122 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NITK</title>
+    <link rel="stylesheet" href="{% static 'style2.css' %}" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+  </head>
+  <body>
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+      integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"
+      integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS"
+      crossorigin="anonymous"
+    ></script>
+    <h1 class="style">Provide your valuable feedback</h1>
+    <div class="hero">
+      <form action="" id="feedbackform">
+        <!--<div class="alert">Your feedback is sent</div> -->
+        <div class="inputrow">
+          <div class="input-group">
+            <input type="text" id="name" required />
+            <label for="name">Your Name</label>
+            <div id="nameError" class="invalid-feedback">
+              Please enter your name.
+            </div>
+          </div>
+
+          <div class="input-group">
+            <input type="number" id="numbe" required />
+            <label for="numbe">Registration.No</label>
+          </div>
+        </div>
+        <div class="input-group">
+          <input type="text" id="number" required />
+          <label for="number">Phone.no</label>
+        </div>
+        <div class="input-group">
+          <input type="email" id="email" autocomplete="on" required />
+          <label for="email">Email id</label>
+        </div>
+        <div class="input-group">
+          <textarea required id="message" rows="10"></textarea>
+          <label for="message">Type in your feedback</label>
+        </div>
+        <input
+          class="btn btn-primary"
+          type="submit"
+          value="SUBMIT"
+          id="submitBtn"
+        />
+      </form>
+    </div>
+
+    <!-- Insert this script at the bottom of the HTML, but before you use any Firebase services -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script>
+      const firebaseConfig = {
+        apiKey: "AIzaSyCoRmdj0YIIu8uwZy3zGBXSdQszxcdX1qc",
+
+        authDomain: "feedback-form-6bca2.firebaseapp.com",
+
+        databaseURL: "https://feedback-form-6bca2-default-rtdb.firebaseio.com",
+
+        projectId: "feedback-form-6bca2",
+
+        storageBucket: "feedback-form-6bca2.appspot.com",
+
+        messagingSenderId: "515832409899",
+
+        appId: "1:515832409899:web:9d028536c2e1fc7d509f6e",
+      };
+      firebase.initializeApp(firebaseConfig);
+      const db = firebase.firestore();
+
+      document
+        .getElementById("feedbackform")
+        .addEventListener("submit", submitform);
+
+      async function submitform(e) {
+        e.preventDefault();
+
+        const nameInput = await document.getElementById("name");
+        const nameError = await document.getElementById("nameError");
+        var yourname = await getElementVal("name");
+        var regno = await getElementVal("numbe");
+        var phone = await getElementVal("number");
+        var email = await getElementVal("email");
+        var message = await getElementVal("message");
+        var x = document.getElementById("email").autocomplete;
+
+        await db.collection("responses").add({
+          name: yourname,
+          regno,
+          phone,
+          email,
+          message,
+        });
+        location.reload();
+      }
+      const getElementVal = (id) => {
+        return document.getElementById(id).value;
+      };
+    </script>
+  </body>
+</html>

@@ -52,14 +52,31 @@
           <button id="search-button" class="search-button">Search</button>
           <a href="{% url 'l' %}" id="logout-link">
             <button id="search-button" class="search-button">logout</button>
-        </a>
-        
+          </a>
+          <a href="{% url 'f' %}" id="feedback-link" style="margin-left: auto"
+            >Send Feedback</a
+          >
         </div>
       </div>
     </nav>
 
     <main>
-      <div class="cards-container container flex" id="cards-container"></div>
+      <div class="cards-container container flex" id="cards-container">
+        {% for news, desc, img, url in mylist %}
+        <a href="{{ url }}" class="card-link">
+          <div class="card">
+            <div class="card-header">
+              <img src="{{ img }}" alt="news-image" id="news-img" />
+            </div>
+            <div class="card-content">
+              <h3>{{ news }}</h3>
+              <h6 class="news-source">End Gadget 26/08/2023</h6>
+              <p class="news-desc">{{ desc }}</p>
+            </div>
+          </div>
+        </a>
+        {% endfor %}
+      </div>
     </main>
     <template id="template-news-card">
       <div class="card">
@@ -70,18 +87,9 @@
             id="news-img"
           />
         </div>
-        <div class="card-content">
-          <h3 id="news-title">This is the Title</h3>
-          <h6 class="news-source" id="news-source">End Gadget 26/08/2023</h6>
-          <p class="news-desc" id="news-desc">
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Tempore,
-            maiores odio consequatur sit, veritatis at nostrum quas ea
-            voluptatibus dolore rem voluptatum, iusto qui mollitia quidem
-            nesciunt architecto. Commodi, odio.
-          </p>
-        </div>
       </div>
     </template>
-    <script src="{% static 'script.js' %}"></script>
+    <script>
+    </script>
   </body>
 </html>
