@@ -57,27 +57,28 @@ def register(request):
         return redirect(f'/login?u={name}')
     return render(request,'register.html')
 
-def home(request):
-    newsapi = NewsApiClient(api_key ='e7bdc0e810624819986b94b0b02d0f1c') 
-    top = newsapi.get_top_headlines(country ='in')  
+# def home(request):
+#     newsapi = NewsApiClient(api_key ='e7bdc0e810624819986b94b0b02d0f1c') 
+#     top = newsapi.get_top_headlines(country ='in')  
   
-    l = top['articles']
-    desc =[] 
-    news =[] 
-    img =[] 
-    urls = []
-    for i in range(len(l)): 
-        f = l[i] 
-        news.append(f['title']) 
-        desc.append(f['description']) 
-        img.append(f['urlToImage']) 
-        urls.append(f['url'])
-    mylist = zip(news, desc, img,urls)
-    # mylist = list(islice(zip(news, desc, img, urls), 100))  
-    # mylist = [(f['title'], f['description'], f['urlToImage'], f['url']) for f in l[:100]]
-    # print(len(mylist))
-    # print(top)
-    return render (request,'index.html',context ={"mylist":mylist})
+#     l = top['articles']
+#     desc =[] 
+#     news =[] 
+#     img =[] 
+#     urls = []
+#     for i in range(len(l)): 
+#         f = l[i] 
+#         news.append(f['title']) 
+#         desc.append(f['description']) 
+#         img.append(f['urlToImage']) 
+#         urls.append(f['url'])
+#     mylist = zip(news, desc, img,urls)
+#     # mylist = list(islice(zip(news, desc, img, urls), 100))  
+#     # mylist = [(f['title'], f['description'], f['urlToImage'], f['url']) for f in l[:100]]
+#     # print(len(mylist))
+#     # print(top)
+#     return render (request,'index.html',context ={"mylist":mylist})
+
 
 def logouts(request):
     logout(request)
@@ -85,3 +86,42 @@ def logouts(request):
 
 def feedback(request):
     return render(request,'form.html')
+
+def home(request):
+    if request.method == 'POST':
+        search_text = request.POST['search_text']
+        newsapi = NewsApiClient(api_key='e7bdc0e810624819986b94b0b02d0f1c')
+        top = newsapi.get_everything(q=search_text, language='en', sort_by='relevancy')
+
+        l = top['articles']
+        desc = []
+        news = []
+        img = []
+        urls = []
+        for i in range(len(l)):
+            f = l[i]
+            news.append(f['title'])
+            desc.append(f['description'])
+            img.append(f['urlToImage'])
+            urls.append(f['url'])
+        mylist = zip(news, desc, img, urls)
+    else:
+        # Display default news (e.g., top headlines from India)
+        newsapi = NewsApiClient(api_key='e7bdc0e810624819986b94b0b02d0f1c')
+        top = newsapi.get_top_headlines(country='in')
+
+        l = top['articles']
+        desc = []
+        news = []
+        img = []
+        urls = []
+        for i in range(len(l)):
+            f = l[i]
+            news.append(f['title'])
+            desc.append(f['description'])
+            img.append(f['urlToImage'])
+            urls.append(f['url'])
+        mylist = zip(news, desc, img, urls)
+
+    context = {"mylist": mylist}
+    return render(request, 'index.html', context)

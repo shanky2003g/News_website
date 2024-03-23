@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>News App</title>
     <link rel="stylesheet" href="{% static 'style1.css' %}" />
+    
   </head>
   <body>
     <nav>
@@ -43,13 +44,11 @@
           </ul>
         </div>
         <div class="search-bar flex">
-          <input
-            id="search-text"
-            type="text"
-            class="news-input"
-            placeholder="e.g. Science"
-          />
-          <button id="search-button" class="search-button">Search</button>
+          <form id="search-form" method="POST" action="{% url 'h' %}">
+            {% csrf_token %}
+            <input type="text" name="search_text" placeholder="Search News">
+            <button id="search-button" class="search-button">Search</button>
+          </form>          
           <a href="{% url 'l' %}" id="logout-link">
             <button id="search-button" class="search-button">logout</button>
           </a>
@@ -90,6 +89,7 @@
       </div>
     </template>
     <script>
-    </script>
+  </script>
+  
   </body>
 </html>
