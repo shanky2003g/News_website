@@ -125,3 +125,86 @@ def home(request):
 
     context = {"mylist": mylist}
     return render(request, 'index.html', context)
+
+def submit(request):
+    if request.method =="POST":
+        return render(request,'form')
+    
+
+def tech(request):
+    newsapi = NewsApiClient(api_key='e7bdc0e810624819986b94b0b02d0f1c') 
+    top = newsapi.get_top_headlines(category='sports')
+
+    articles = top['articles']
+    news = []
+    desc = []
+    img = []
+    urls = []
+    for article in articles:
+        news.append(article['title'])
+        desc.append(article['description'])
+        img.append(article['urlToImage'])
+        urls.append(article['url'])
+
+    mylist = zip(news, desc, img, urls)
+
+    return render(request, 'index.html', context={"mylist": mylist})
+
+def business(request):
+    newsapi = NewsApiClient(api_key='e7bdc0e810624819986b94b0b02d0f1c') 
+    top = newsapi.get_top_headlines(category='business') 
+
+    articles = top['articles']
+    news = []
+    desc = []
+    img = []
+    urls = []
+    for article in articles:
+        news.append(article['title'])
+        desc.append(article['description'])
+        img.append(article['urlToImage'])
+        urls.append(article['url'])
+
+    mylist = zip(news, desc, img, urls)
+
+    return render(request, 'index.html', context={"mylist": mylist})
+
+def enter(request):
+    newsapi = NewsApiClient(api_key='e7bdc0e810624819986b94b0b02d0f1c') 
+    top = newsapi.get_top_headlines(category='entertainment')  
+    articles = top['articles']
+    news = []
+    desc = []
+    img = []
+    urls = []
+    for article in articles:
+        news.append(article['title'])
+        desc.append(article['description'])
+        img.append(article['urlToImage'])
+        urls.append(article['url'])
+
+    mylist = zip(news, desc, img, urls)
+
+    return render(request, 'index.html', context={"mylist": mylist})
+ 
+def science(request):
+    newsapi = NewsApiClient(api_key='e7bdc0e810624819986b94b0b02d0f1c') 
+    top = newsapi.get_top_headlines(category='science')  
+    articles = top['articles']
+    news = []
+    desc = []
+    img = []
+    urls = []
+    for article in articles:
+        news.append(article['title'])
+        desc.append(article['description'])
+        img.append(article['urlToImage'])
+        urls.append(article['url'])
+
+    mylist = zip(news, desc, img, urls)
+
+    return render(request, 'index.html', context={"mylist": mylist})
+ 
+ 
+ 
+ 

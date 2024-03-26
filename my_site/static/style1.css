@@ -146,3 +146,18 @@ main {
 .nav-item.active {
   color: var(--accent-color);
 }
+.flex {
+  list-style-type: none;
+  padding: 0;
+}
+
+.nav-item {
+  cursor: pointer;
+  text-decoration: none;
+  color: black; /* Change color as needed */
+}
+
+.nav-item:hover {
+  text-decoration: none;
+  color: #000080; /* Change hover color as needed */
+}

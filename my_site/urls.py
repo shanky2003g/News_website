@@ -10,4 +10,10 @@ urlpatterns = [
      path("home/",views.home, name="h"),
      path("logouts/",views.logouts, name="logouts"),
      path("feedback/",views.feedback, name="f"),
+     path("submit/",views.submit, name="s"),
+     path("tech/",views.tech, name="t"),
+     path("business/",views.business, name="b"),
+     path("enter/",views.enter, name="p"),
+     path("science/",views.science, name="s"),
+
 ]
